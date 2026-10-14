@@ -52,37 +52,8 @@ Needs JDK 17+ and the Android SDK with platform API 36.
 # APK: app/build/outputs/apk/release/app-release.apk
 ```
 
-Without a `keystore.properties` file (see below), release builds are signed
+Without a `keystore.properties` file, release builds are signed
 with your local debug key. That's fine for your own phone.
-
-## Making a release (maintainer)
-
-**One-time setup:** create a signing key and keep it safe. If you lose it, you
-can never publish an update that installs over existing copies.
-
-```sh
-keytool -genkeypair -v -keystore mensaqr-release.jks -alias mensaqr \
-  -keyalg RSA -keysize 4096 -validity 10000 -dname "CN=Mensa QR"
-```
-
-Then create `keystore.properties` in the project root:
-
-```properties
-storeFile=mensaqr-release.jks
-storePassword=YOUR_STORE_PASSWORD
-keyAlias=mensaqr
-keyPassword=YOUR_KEY_PASSWORD
-```
-
-Both files are in `.gitignore`. Back them up somewhere other than this repo.
-
-**Each release:**
-
-1. In `app/build.gradle`, raise `versionCode` by 1 and set a new `versionName`.
-2. Run `./gradlew assembleRelease`.
-3. Commit and push, then copy the APK to e.g. `MensaQR-1.0.0.apk`.
-4. Publish with the GitHub CLI (this also creates the tag):
-   `gh release create v1.0.0 MensaQR-1.0.0.apk --title "Mensa QR 1.0.0"`
 
 ## License
 
