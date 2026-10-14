@@ -46,7 +46,7 @@ private val DEVICE_NAME: String by lazy {
     val maker = Build.MANUFACTURER.replaceFirstChar { it.uppercase() }
     val model = if (Build.MODEL.startsWith(Build.MANUFACTURER, ignoreCase = true)) Build.MODEL
                 else "$maker ${Build.MODEL}"
-    "Studylife on $model"
+    "$APP_NAME on $model"
 }
 
 private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
