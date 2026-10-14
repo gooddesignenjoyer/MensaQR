@@ -6,6 +6,7 @@ code instantly, without opening the website and logging in every time.
 > **Unofficial.** This app is not affiliated with, endorsed by, or supported by
 > Akafö or StudyLife. It talks to the same API the StudyLife website uses, which
 > can change at any time. If it stops working, use the website.
+> Use at own risk.
 
 ## Install
 
