@@ -1,0 +1,56 @@
+plugins {
+    id "com.android.application"   // AGP 9 compiles Kotlin itself, no Kotlin plugin needed
+}
+
+// Release signing key, kept OUT of the repo (see README, "Making a release").
+// Without keystore.properties, release builds fall back to the local debug key,
+// so anyone who clones the repo can still build and run it.
+def keystorePropsFile = rootProject.file("keystore.properties")
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+}
+
+android {
+    namespace = "io.github.gooddesignenjoyer.mensaqr"
+    compileSdk = 36
+
+    defaultConfig {
+        // The app's permanent identity on phones. Never change it after the first
+        // release: a new ID makes it a different app, and updates stop installing.
+        applicationId = "io.github.gooddesignenjoyer.mensaqr"
+        minSdk = 23
+        targetSdk = 36
+        versionCode = 1          // bump by 1 for every release
+        versionName = "1.0.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            if (keystorePropsFile.exists()) {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            def signWith = keystorePropsFile.exists() ? "release" : "debug"
+            signingConfig = signingConfigs.getByName(signWith)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation("com.google.zxing:core:3.5.3")
+}

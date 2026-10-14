@@ -1,0 +1,17 @@
+# Build output
+build/
+.gradle/
+.kotlin/
+
+# Local machine config (SDK path)
+local.properties
+
+# Signing key and its passwords: NEVER commit these
+keystore.properties
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+*.apk
